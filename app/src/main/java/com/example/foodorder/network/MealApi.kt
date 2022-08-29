@@ -1,5 +1,6 @@
 package com.example.foodorder.network
 
+import com.example.foodorder.models.CategoryList
 import com.example.foodorder.models.Meal
 import com.example.foodorder.models.MealList
 import retrofit2.Call
@@ -14,4 +15,6 @@ interface  MealApi {
     @GET("lookup.php")
     fun getMealDetails(@Query("i")id:String):Call<MealList>
 
+    @GET("filter.php")
+   fun getPopularItems(@Query ("c")categoryName:String):Call<CategoryList>
 }
