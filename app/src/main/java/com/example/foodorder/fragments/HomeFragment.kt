@@ -3,31 +3,24 @@ package com.example.foodorder.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 //import android.support.v4.app.Fragment;
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.foodorder.R
 import com.example.foodorder.activities.MealActivity
+import com.example.foodorder.adapters.CategoryAdapter
 import com.example.foodorder.adapters.MostPopularAdapter
 import com.example.foodorder.databinding.FragmentHomeBinding
-import com.example.foodorder.models.CategoryMeals
+import com.example.foodorder.models.MealsByCategory
 import com.example.foodorder.models.Meal
-import com.example.foodorder.models.MealList
-import com.example.foodorder.network.RetrofitInstance
 import com.example.foodorder.viewmodel.HomeViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 
 
 //    get() {}
@@ -53,6 +46,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var mostPopularAdapter: MostPopularAdapter
+    private lateinit var categoriesAdapter: CategoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this@HomeFragment)[HomeViewModel::class.java]
@@ -66,17 +60,25 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
        binding = FragmentHomeBinding.inflate(inflater,container,false)
-        binding.apply { rvMealsPopular.setUp() }
+//        binding.apply {      }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       viewModel.getRandomMeal()
-        viewModel.getPopularItems()
+       viewModel.apply {
+           getRandomMeal()
+           getPopularItems()
+           getCategories()
+       }
+
+//        viewModel
+
         binding.apply {
 
-
+            rvMealsPopular.setUp()
+            rvCategories.setUpGrid()
             viewModel.randomMealLiveData.observe(viewLifecycleOwner,Observer<Meal> {
 
                     Glide.with(this@HomeFragment)
@@ -87,12 +89,19 @@ class HomeFragment : Fragment() {
             })
 
         }
-
-  viewModel.popularItemsLiveData.observe(viewLifecycleOwner, Observer {
+viewModel.apply {
+    popularItemsLiveData.observe(viewLifecycleOwner, Observer {
 //      Log.d(TAG, "onViewCreated: ${it[0]}")
-      mostPopularAdapter.differ.submitList(it as ArrayList<CategoryMeals>)
+        mostPopularAdapter.differ.submitList(it as ArrayList<MealsByCategory>)
 
-})
+    })
+  categoriesLiveData.observe(viewLifecycleOwner, Observer {
+  categoriesAdapter.differ.submitList(it)
+  })
+
+}
+
+
 //        binding.apply {
 //            Glide.with(this@HomeFragment)
 //                .load(randomMeal.strMealThumb)
@@ -127,5 +136,10 @@ class HomeFragment : Fragment() {
         mostPopularAdapter = MostPopularAdapter()
         adapter= mostPopularAdapter
         layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+    }
+    private fun RecyclerView.setUpGrid(){
+        categoriesAdapter = CategoryAdapter()
+        adapter =categoriesAdapter
+        layoutManager = GridLayoutManager(context,3, GridLayoutManager.VERTICAL,false)
     }
 }

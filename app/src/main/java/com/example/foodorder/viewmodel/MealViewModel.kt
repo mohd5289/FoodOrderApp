@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.foodorder.models.CategoryList
 import com.example.foodorder.models.Meal
 import com.example.foodorder.models.MealList
 import com.example.foodorder.network.RetrofitInstance
@@ -16,6 +17,8 @@ class MealViewModel:ViewModel() {
     private  var _mealDetailsLiveData =MutableLiveData<Meal>()
     val mealDetailsLiveData:LiveData<Meal>
      get() = _mealDetailsLiveData
+
+//    private var categoryList
 
     private val TAG = "MealActivity"
     fun getMealDetails(id:String){

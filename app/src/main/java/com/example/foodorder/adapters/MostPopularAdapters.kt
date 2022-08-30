@@ -6,21 +6,21 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.foodorder.databinding.ActivityMealBinding
 import com.example.foodorder.databinding.PopularItemsBinding
-import com.example.foodorder.models.CategoryList
-import com.example.foodorder.models.CategoryMeals
+import com.example.foodorder.models.MealsByCategory
 
 class MostPopularAdapter:RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
- lateinit var onItemClick:((CategoryMeals)->Unit)
+ lateinit var onItemClick:((MealsByCategory)->Unit)
 
  inner   class PopularMealViewHolder(val binding: PopularItemsBinding):RecyclerView.ViewHolder(binding.root)
-    private val differCallBack= object : DiffUtil.ItemCallback<CategoryMeals>(){
-        override fun areItemsTheSame(oldItem: CategoryMeals, newItem: CategoryMeals): Boolean {
+
+
+    private val differCallBack= object : DiffUtil.ItemCallback<MealsByCategory>(){
+        override fun areItemsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
             return  oldItem.idMeal == newItem.idMeal
         }
 
-        override fun areContentsTheSame(oldItem: CategoryMeals, newItem: CategoryMeals): Boolean {
+        override fun areContentsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
             return oldItem== newItem
         }
 
