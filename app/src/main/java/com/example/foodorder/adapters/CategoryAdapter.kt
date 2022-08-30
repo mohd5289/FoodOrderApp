@@ -11,6 +11,7 @@ import com.example.foodorder.databinding.PopularItemsBinding
 import com.example.foodorder.models.Category
 
 class CategoryAdapter:RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+    lateinit var onItemClick:(Category)-> Unit
 
 inner class CategoryViewHolder(val binding: CategoryItemBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -38,7 +39,11 @@ inner class CategoryViewHolder(val binding: CategoryItemBinding):RecyclerView.Vi
                .load(differ.currentList[position].strCategoryThumb)
                .into(binding.imgCategory)
             binding.tvCategoryName.text= differ.currentList[position].strCategory
+    itemView.setOnClickListener {
+        onItemClick(differ.currentList[position])
+    }
         }
+
     }
 
     override fun getItemCount(): Int {

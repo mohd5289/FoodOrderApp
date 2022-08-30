@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.foodorder.activities.CategoryMealsActivity
 import com.example.foodorder.activities.MealActivity
 import com.example.foodorder.adapters.CategoryAdapter
 import com.example.foodorder.adapters.MostPopularAdapter
@@ -41,6 +42,7 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "com.example.foodorder.fragments.idMeal"
     const val MEAL_NAME = "com.example.foodorder.fragments.nameMeal"
     const val MEAL_THUMB = "com.example.foodorder.fragments.thumbMeal"
+    const val CATEGORY_NAME = "com.example.foodorder.fragments.categoryName"
     }
     lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
@@ -98,7 +100,11 @@ viewModel.apply {
   categoriesLiveData.observe(viewLifecycleOwner, Observer {
   categoriesAdapter.differ.submitList(it)
   })
-
+categoriesAdapter.onItemClick={
+    val intent = Intent(activity,CategoryMealsActivity::class.java)
+    intent.putExtra(CATEGORY_NAME,it.strCategory)
+    startActivity(intent)
+}
 }
 
 
