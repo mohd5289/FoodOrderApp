@@ -49,7 +49,7 @@ private var _popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
 
         })
     }
-fun getPopularItems(){
+   fun getPopularItems(){
     RetrofitInstance.api.getPopularItems("Seafood").enqueue(object :Callback<MealsByCategoryList>{
         override fun onResponse(call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>) {
            if(response.body()!=null){

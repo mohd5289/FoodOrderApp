@@ -41,7 +41,7 @@ class MealActivity : AppCompatActivity() {
                 tvCategory.text=  "Category: ${it.strCategory}"
                 tvArea.text ="Area: ${it.strArea}"
                 tvInstructionsSteps.text = it.strInstructions
-                youtubeLink = it.strYoutube
+                youtubeLink = it.strYoutube as String
             }
         })
         onYouTubeImageClicked()
