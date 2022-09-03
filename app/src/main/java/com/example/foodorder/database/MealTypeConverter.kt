@@ -8,16 +8,14 @@ import java.util.jar.Attributes
 class MealTypeConverter {
     @TypeConverter
     fun fromAnyToString(attribute: Any?):String{
-        var attr= attribute?.let {
-            ""
-        }
-    return  attr as String
+       if(attribute==null)return ""
+
+        return  attribute as String
     }
     @TypeConverter
     fun fromStringToAny(attribute: String?):Any?{
-        var attr = attribute?.let {
-            ""
-        }
-        return  attr as Any
+       if(attribute==null) return ""
+
+        return attribute
     }
 }

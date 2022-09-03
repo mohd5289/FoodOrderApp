@@ -4,13 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.foodorder.database.MealDatabase
 import com.example.foodorder.models.*
 import com.example.foodorder.network.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel:ViewModel() {
+class HomeViewModel(private val mealDatabase: MealDatabase?) :ViewModel() {
 private val TAG = "HomeFragment"
     private  var _randomMealLiveData= MutableLiveData<Meal>()
      val randomMealLiveData:LiveData<Meal>
@@ -78,5 +81,18 @@ private var _popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
             }
 
         })
+    }
+    fun getAllMeals()=
+        mealDatabase?.mealDao()?.getAllMeals()
+
+    fun deleteMeal(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase?.mealDao()?.delete(meal)
+        }
+    }
+    fun insertMeal(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase?.mealDao()?.upsert(meal)
+        }
     }
 }

@@ -18,8 +18,8 @@ abstract class MealDatabase :RoomDatabase(){
 
         @Synchronized
         fun getInstance(context: Context): MealDatabase? {
-         INSTANCE =     INSTANCE?.let {
-                 Room.databaseBuilder(context,MealDatabase::class.java,"meal.db")
+          if(INSTANCE==null){
+              INSTANCE=  Room.databaseBuilder(context,MealDatabase::class.java,"meal.db")
                     .fallbackToDestructiveMigration()
                     .build()
             }
