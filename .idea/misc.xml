@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/rounded_top_shape.xml" value="0.106" />
         <entry key="app/src/main/res/font/fonts.xml" value="0.13177083333333334" />
         <entry key="app/src/main/res/layout/activity_category_meals.xml" value="0.1015625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11" />
@@ -11,6 +12,7 @@
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_meal_bottom_sheet.xml" value="0.1" />
         <entry key="app/src/main/res/layout/meal_item.xml" value="0.1015625" />
         <entry key="app/src/main/res/layout/popular_items.xml" value="0.11144883485309018" />
         <entry key="app/src/main/res/menu/btm_menu.xml" value="0.22916666666666666" />

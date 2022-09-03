@@ -1,7 +1,6 @@
 package com.example.foodorder.fragments
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +16,11 @@ import com.bumptech.glide.Glide
 import com.example.foodorder.activities.CategoryMealsActivity
 import com.example.foodorder.activities.MainActivity
 import com.example.foodorder.activities.MealActivity
-import com.example.foodorder.adapters.CategoryAdapter
+import com.example.foodorder.adapters.CategoriesAdapter
 import com.example.foodorder.adapters.MostPopularAdapter
 import com.example.foodorder.database.MealDatabase
 import com.example.foodorder.databinding.FragmentHomeBinding
+import com.example.foodorder.fragments.bottomsheet.MealBottomSheetFragment
 import com.example.foodorder.models.MealsByCategory
 import com.example.foodorder.models.Meal
 import com.example.foodorder.viewmodel.HomeViewModel
@@ -52,7 +50,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var mostPopularAdapter: MostPopularAdapter
-    private lateinit var categoriesAdapter: CategoryAdapter
+    private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var mealDatabase: MealDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +110,10 @@ categoriesAdapter.onItemClick={
     intent.putExtra(CATEGORY_NAME,it.strCategory)
     startActivity(intent)
 }
+  mostPopularAdapter.onItemLongClick={
+      val mealBottomSheetFragment= MealBottomSheetFragment.newInstance(it.idMeal)
+      mealBottomSheetFragment.show(childFragmentManager,"Meal Info")
+  }
 }
 
 
@@ -151,7 +153,7 @@ categoriesAdapter.onItemClick={
         layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
     }
     private fun RecyclerView.setUpGrid(){
-        categoriesAdapter = CategoryAdapter()
+        categoriesAdapter = CategoriesAdapter()
         adapter =categoriesAdapter
         layoutManager = GridLayoutManager(context,3, GridLayoutManager.VERTICAL,false)
     }

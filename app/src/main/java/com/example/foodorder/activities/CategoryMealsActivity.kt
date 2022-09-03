@@ -25,7 +25,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel = ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
     viewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!)
-   binding.apply { rvMeals.setUp() }
+     binding.apply { rvMeals.setUp() }
 
         viewModel.mealsLiveData.observe(this, Observer {
             binding.tvCategoryCount.text = it.size.toString()

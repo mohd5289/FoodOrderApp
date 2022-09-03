@@ -11,6 +11,7 @@ import com.example.foodorder.models.MealsByCategory
 
 class MostPopularAdapter:RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
  lateinit var onItemClick:((MealsByCategory)->Unit)
+   var onItemLongClick:((MealsByCategory)->Unit)?=null
 
  inner   class PopularMealViewHolder(val binding: PopularItemsBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -41,8 +42,13 @@ class MostPopularAdapter:RecyclerView.Adapter<MostPopularAdapter.PopularMealView
 itemView.setOnClickListener{
     onItemClick(differ.currentList[position])
 }
+              itemView.setOnLongClickListener{
+                  onItemLongClick?.let { it1 -> it1(differ.currentList[position]) }
+                  true
+              }
          executePendingBindings() }
         }
+
     }
 
     override fun getItemCount(): Int {

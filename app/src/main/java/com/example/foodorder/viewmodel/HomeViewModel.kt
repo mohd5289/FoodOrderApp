@@ -18,6 +18,10 @@ private val TAG = "HomeFragment"
     private  var _randomMealLiveData= MutableLiveData<Meal>()
      val randomMealLiveData:LiveData<Meal>
         get() =_randomMealLiveData
+   
+    private var _bottomSheetMealLiveData = MutableLiveData<Meal>()
+    val bottomSheetMealLiveData:LiveData<Meal>
+    get() = _bottomSheetMealLiveData
 //init {
 //    getRandomMeal()
 //}
@@ -95,4 +99,18 @@ private var _popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
             mealDatabase?.mealDao()?.upsert(meal)
         }
     }
+    fun getMealById(id:String)
+    =RetrofitInstance.api.getMealDetails(id).enqueue(object :Callback<MealList>{
+        override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+            val meal= response.body()!!.meals.first()
+            meal?.let { 
+                _bottomSheetMealLiveData.postValue(it)
+            }
+        }
+
+        override fun onFailure(call: Call<MealList>, t: Throwable) {
+            Log.e(TAG, "onFailure: ${t.message.toString()}", )
+        }
+
+    })
 }
