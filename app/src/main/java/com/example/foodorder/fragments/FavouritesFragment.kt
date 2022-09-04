@@ -9,11 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodorder.R
 import com.example.foodorder.activities.MainActivity
-import com.example.foodorder.adapters.FavoritesAdapter
+import com.example.foodorder.adapters.MealsAdapter
 import com.example.foodorder.databinding.FragmentFavouritesBinding
 import com.example.foodorder.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -34,7 +33,7 @@ class FavouritesFragment : Fragment() {
     private var param2: String? = null
  private lateinit var binding: FragmentFavouritesBinding
  private lateinit var viewModel: HomeViewModel
- private lateinit var favoritesAdapter: FavoritesAdapter
+ private lateinit var mealsAdapter: MealsAdapter
 
     //
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +61,7 @@ class FavouritesFragment : Fragment() {
 
          override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
              val position = viewHolder.adapterPosition
-             val meal = favoritesAdapter.differ.currentList[position]
+             val meal = mealsAdapter.differ.currentList[position]
              viewModel.deleteMeal(meal)
              Snackbar.make(requireView(),"Meal deleted ${meal.strMeal}",Snackbar.LENGTH_LONG)
                  .setAction("Undo",
@@ -84,14 +83,14 @@ class FavouritesFragment : Fragment() {
    binding.apply {
        viewModel.apply {
            getAllMeals()?.observe(viewLifecycleOwner, Observer {
-     favoritesAdapter.differ.submitList(it)
+     mealsAdapter.differ.submitList(it)
            })
        }
    }
     }
 private fun RecyclerView.setUp(){
-    favoritesAdapter = FavoritesAdapter()
-    adapter = favoritesAdapter
+    mealsAdapter = MealsAdapter()
+    adapter = mealsAdapter
     layoutManager= GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
 }
 
