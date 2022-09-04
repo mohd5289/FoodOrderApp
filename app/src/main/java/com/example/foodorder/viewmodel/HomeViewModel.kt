@@ -23,9 +23,9 @@ private val TAG = "HomeFragment"
     private var _bottomSheetMealLiveData = MutableLiveData<Meal>()
     val bottomSheetMealLiveData:LiveData<Meal>
     get() = _bottomSheetMealLiveData
-//init {
-//    getRandomMeal()
-//}
+init {
+    getRandomMeal()
+}
 
 private var _popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     val popularItemsLiveData: LiveData<List<MealsByCategory>>
